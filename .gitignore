@@ -1,0 +1,13 @@
+# General MacOS
+.DS_Store
+*/.DS_Store
+**/.DS_Store
+._.DS_Store
+
+# Arquivos e pasta que devem ser ignorados 
+
+node_modules/
+
+# zip e rar
+*.zip
+*.rar
