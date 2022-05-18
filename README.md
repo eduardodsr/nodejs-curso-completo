@@ -1,10 +1,10 @@
-# Node JS Curso Completo do Básico ao Avançado
+# Node JS Curso Completo do Básico ao Avançado 
 
-Udemy - HCODE
 
 ## Sobre este curso
 
-NodeJS do zero ao avançado, Mongo DB, REST API, Internet das Coisas IoT, segurança, Express JS.
+- Udemy: HCODE
+- NodeJS do zero ao avançado, Mongo DB, REST API, Internet das Coisas IoT, segurança, Express JS.
 
 ## O que você aprenderá
 
@@ -57,7 +57,7 @@ NodeJS do zero ao avançado, Mongo DB, REST API, Internet das Coisas IoT, segura
 
 - https://nodejs.org/
 
-- Terminal
+  - Terminal - comandos:
 
 ```js
 node --version
@@ -81,6 +81,7 @@ npm --version
 7. Primeiro Script com NodeJS
 
 - Subir um servidor Web com poucas linhas de código com o Node.js
+- Criar o arquivo **server.js**
 
 <code> server.js </code>
 
@@ -109,7 +110,7 @@ node server.js
 Server running ate http://127.0.0.1:3000
 ```
 
-- Acessar ao Browser
+- Abrir o navegador (Browser)
 
 http://localhost:3000
 
@@ -126,6 +127,7 @@ Ola Mundo!
 - Vamos utilizar:
     - learnyounode (Aprenda o seu Node)
 
+<!-- 
 Instalar o <code> learnyounode </code>:
 
 ```js
@@ -165,6 +167,8 @@ Verificar seu código está correto:
 
 <code> learnyounode verify hello-world.js </code>
 
+-->
+
 9. NPM vs Yarn
 
 O **NPM** é uma ferramenta do Node. js para o gerenciamento de pacotes. Ele permite instalar, desinstalar e atualizar dependências em uma aplicação por meio de uma simples instrução na linha de comando. Sempre que um projeto é criado por meio do gerenciador, é adicionado um arquivo chamado package.
@@ -174,7 +178,7 @@ O **NPM** é uma ferramenta do Node. js para o gerenciamento de pacotes. Ele per
 
 - NPM
     - https://www.npmjs.com/
-    - _npm install_
+    - npm install
         -   Local:
             - npm install &lt;package&gt;
             - npm install bootstrap
@@ -182,7 +186,7 @@ O **NPM** é uma ferramenta do Node. js para o gerenciamento de pacotes. Ele per
             - npm install -g &lt;package&gt;
 - Yarn
     - https://yarnpkg.com/
-    - _yarn install_
+    - yarn install
         -   Local:
             - yarn add &lt;package&gt;
             - yarn add bootstrap
@@ -192,7 +196,7 @@ O **NPM** é uma ferramenta do Node. js para o gerenciamento de pacotes. Ele per
 <br>
 
 - Diferenças entre o NPM e o Yarn:
-    - O NPM já vem instalado com o NodeSJ;
+    - O NPM já vem instalado com o Node JS;
     - O Yarn é necessário realizar a instalação;
     - O Yarn é mais rápido, garante os pacotes das dependencias sejam instaladas na mesma ordem.
 
@@ -208,7 +212,7 @@ O **Gerenciador de pacotes** do Node.js (**npm**) é o gerenciador de pacotes pa
 - Todos os metadados para um projeto, como o autor, a licença, etc.
 - Scripts que podem ser executados para automatizar tarefas dentro do projeto.
 
-#### Inicializar o projeto:
+#### Inicializar o projeto (iniciar o repositório em uma pasta do projeto):
 
 - Vamos gerar o nosso arquivo <code> package.json </code>
 
@@ -232,7 +236,7 @@ $ npm i <module>
 
 Todos os arquivos que nós baixamos via o Gerenciador de Pacote (NPM ou Yarn) eles vêm parar nessa pasta de node_modulos.
 
-A pasta <code> node_modulos </code> é instalada dentro da pasta principal (raiz) do projeto.
+A pasta <code> node_modulos </code> é instalada dentro da pasta principal (raiz) do projeto. Ela é uma pasta muito pesada.
 
 Portanto, não enviamos a pasta <code> node_modulos </code> para p GitHub.
 
@@ -257,18 +261,394 @@ node_modules/
 *.rar
 ```
 
+#### Perguntas
 
-12. Você se Lembra: NodeJS Instalação e Configuração
+Você se Lembra: NodeJS Instalação e Configuração
+
+##### Pergunta 1:
+Qual o nome dado ao arquivo de configuração de um projeto Node.JS que contempla as dependências do projeto, bem como tipo de licença e descrição?
+
+- package.json
+
+##### Pergunta 2:
+Qual comando utilizamos para iniciar um repositório git em uma pasta?
+
+- git init
+
+##### Pergunta 3:
+Qual comando utilizamos para instalar um módulo presente no NPM utilizando Yarn?
+
+- yarn add < modulo >
+
+##### Pergunta 4:
+Qual diretório deve ser adicionado ao arquivo .gitignore e por qual motivo?
+
+- node_modules, uma vez que package.json deverá conter os módulos como dependência, é
+desnecessário subir a pasta node_modules para um repositório git.
+
+
 
 ### 2. Conceitos Fundamentais do NodeJS
 
-11. Blocking Vs Non Blocking
-12. Concorrência e Taxa de Transferência
-13. Cuidados ao utilizar Blocking e Non Blocking
-14. NodeJS Entendendo o Núcleo
-15. NodeJS Single Thread ou Multithread?
-16. A Libuv - Event Loop
-17. Você se lembra: NodeJS Conceitos Fundamentais
+12. Blocking Vs Non Blocking
+
+-  **Blocking** / ( readFile**Sync** ) /  **síncrona**
+
+-  **Non Blocking** / ( readFile ) / **assíncrona** (criar um callback)
+
+<br>
+
+
+- Ex. Chamada bloqueante ( **Blocking** ) / ( readFile**Sync** ) /  **síncrona**
+
+```js
+const fs = require('fs');
+
+console.log((process.hrtime()[0]/60).toFixed(6));
+
+console.log('Antes da leitura do arquivo');
+
+const dados = fs.readFileSync('README.md'); // conexão bloqueante
+
+console.log('Executando o console após o arquivo');
+
+console.log((process.hrtime()[0]/60).toFixed(6));
+```
+
+<br>
+
+
+- Ex. Chamada não-bloqueante ( **Non Blocking** ) / ( readFile ) / **assíncrona** (criar um callback)
+
+```js
+const fs = require('fs');
+
+console.log((process.hrtime()[0]/60).toFixed(6));
+
+console.log('Antes da leitura do arquivo');
+
+// conexão não bloqueante
+
+const dados = fs.readFile('README.md', (err, data) => { 
+
+    if (err) throw err;
+
+    console.log("Terminei a leitura do arquivo README");
+});
+
+console.log('Executando o console após o arquivo');
+
+console.log((process.hrtime()[0]/60).toFixed(6)); 
+```
+
+<br>
+
+- Métodos **bloqueantes** executam de forma **síncrona** (palavra chave **Sync**). 
+
+  - Ser bloqueante é quando a execução do código precisa esperar até que uma operação seja completada. Isso acontece porque o **event loop** é incapaz de continuar executando JavaScript enquanto uma operação bloqueante está sendo executada.
+  - Então, na Operação Bloqueante ( Blocking ) faço uma ação, enquanto ela não termina não consigo fazer a próxima ação.
+
+<br>
+
+- Métodos **não-bloqueantes** executam de forma **assíncrona** (callbacks)
+  - Executa várias coisas ao mesmo tempo de forma concorrente.
+
+---
+
+#### Visão geral sobre operações bloqueantes e não-bloqueantes
+
+https://nodejs.org/pt-br/docs/guides/blocking-vs-non-blocking/
+
+- Conexão/Chamada bloqueantes ( Blocking )
+- Conexão/Chamada não-bloqueantes ( Non Blocking )
+
+#### Chamadas bloqueantes
+
+Ser bloqueante é quando a execução do código precisa esperar até que uma operação não-JavaScript seja completada. Isso acontece porque o **event loop** é incapaz de continuar executando JavaScript enquanto uma operação bloqueante está sendo executada.
+
+Todos os métodos I/O na biblioteca padrão do Node.js tem uma versão assíncrona, que, por definição, são **não-bloqueantes**, e aceitam funções de **callback.** Alguns métodos também tem suas versões **bloqueantes**, que possuem o sufixo **Sync** no nome.
+
+#### Comparando códigos
+
+- Métodos **bloqueantes** executam de forma **síncrona** (Sync)
+  - _fs.readFileSync( )_
+
+- Métodos **não-bloqueantes** executam de forma **assíncrona** (callbacks)
+  - _fs.readFile( )_
+
+```js
+const fs = require('fs');
+const data = fs.readFileSync('/file.md'); // a execução é bloqueada aqui até o arquivo ser lido
+```
+
+E aqui temos um exemplo equivalente usando um método **assíncrono**:
+
+```js
+const fs = require('fs');
+fs.readFile('/file.md', (err, data) => {
+  if (err) throw err;
+});
+```
+
+O primeiro exemplo parece mais simples do que o segundo, mas ele possui o contra de que, na segunda linha, temos um código bloqueando a execução de qualquer JavaScript adicional até que todo o arquivo seja lido. Note que, na **versão síncrona**, qualquer erro que houver na aplicação vai precisar ser tratado ou então o processo vai sofrer um crash. Na **versão assíncrona,** é da decisão do programador se quer ou não tratar os erros.
+
+```js
+const fs = require('fs');
+const data = fs.readFileSync('./file.txt'); // trava aqui até o arquivo ser lido
+console.log(data);
+
+maisProcessamento(); // roda depois de console.log
+```
+
+Um exemplo similar, mas não equivalente, no formato **assíncrono**:
+
+```js
+const fs = require('fs');
+fs.readFile('./file.txt', (err, data) => {
+  if (err) throw err;
+  console.log(data);
+});
+
+maisProcessamento(); // vai rodar antes do console.log
+```
+
+No primeiro exemplo acima, <code> console.log </code> vai ser chamado antes de <code> maisProcessamento() </code>. 
+
+No segundo exemplo, <code> fs.readFile() </code> é uma operação não-bloqueante, então a execução de código JavaScript vai continuar e o método <code> maisProcessamento() </code> vai ser chamado primeiro. 
+
+A habilidade de executar <code> maisProcessamento() </code> sem ter de esperar o arquivo ser completamente lido é um conceito chave de design que permite uma melhor escalabilidade através de mais rendimento.
+
+---
+
+13. Concorrência e Taxa de Transferência
+
+#### Concorrência e Rendimento
+
+A execução padrão do JavaScript no Node.js é **single threaded** (processo numa única trilha), ou seja, acontece é um único processo. 
+
+Então a **concorrência** é referente somente à capacidade do **event loop** de executar funções de **callback** depois de completar qualquer outro processamento, ou seja, executar funções em paralelo. 
+
+Qualquer código que pode rodar de maneira concorrente deve permitir que o event loop continue executando enquanto uma operação não-JavaScript, como I/O, está sendo executada.
+
+Portanto, o ideal é utilizar os Métodos Não-Bloqueantes ( Non Blocking ) para executar processos em paralelo (concorrência), o código fica com mais performace. Reduz o tempo de processamento e melhora a resposta.
+
+14. Cuidados ao utilizar Blocking e Non Blocking
+
+Ao utilizar os Métodos Não-Bloqueantese e Bloqueantes juntos podem apresentar problema!
+
+Por exemplo, aqui estamos utilizando os dois métodos juntos, vamos ler um arquivo e excluir o arquivo de imediato, sem aguardar o termino da leitura do Buffer:
+
+```js
+// Vamos ler um arquivo e excluir o arquivo
+
+const fs = require('fs');
+
+// método não bloqueante
+fs.readFile('data.json', (err, data) => {
+
+    if(err) throw err;
+    console.log(data);
+});
+
+fs.unlinkSync('data.json'); // método bloqueante
+```
+
+Exemplo com correção do problema acima:
+
+```js
+// Vamos utilizar somente o método não bloqueante
+
+const fs = require('fs');
+
+fs.readFile('data.json', (err, data) => {
+
+    if(err) throw err;
+    console.log(data);
+
+    fs.unlink('data.json', (unLinkErr) => {
+
+        if (unLinkErr) throw unLinkErr;
+        console.log('Arquivo excluído com sucesso!')
+    });
+
+});
+```
+
+Dica: Seguir o mesmo padrão, não misturar o seu código bloqueante com não bloqueante!
+
+
+15. NodeJS Entendendo o Núcleo
+
+#### NodeJS
+
+- O Node.js &rarr; é um ambiente de tempo de execução JavaScript de código aberto e multiplataforma.
+
+- O Node.js executa o motor JavaScript V8, o núcleo do Google Chrome, fora do navegador. Isso permite que o Node.js seja muito eficiente.
+
+- o Node.js é um runtime JavaScript server-side, ou seja, uma solução que possibilita ao desenvolvedor executar aplicações escritas em JavaScript do lado do servidor, de forma simples, rápida e performática. Isso é possível basicamente graças ao motor V8 e a biblioteca libuv, solução open-source para a qual dedicaremos mais algumas linhas logo adiante.
+
+#### NodeJS o Núcleo
+
+Como funciona o NodeJS INTERNAMENTE?
+
+- É um ambiente de execução JavaScript sob o V8 JavaScript Engine.
+- Utiliza Programação Dirigida ao Evento – Event Drive Programming. (Programação reativa &rarr; callbacks)
+- Utiliza Métodos não bloqueantes de entrada e saída de dados i/o. Permitindo ser leve e eficiente.
+
+<br>
+
+- **NodeJS o Núcleo** - Funcionamento interno:
+
+  - Application Code (JS)
+
+    - C/C++ Binginds 
+      - V8  
+      - Libuv &rarr; Event Loop
+      - c-ares (DNS)
+    
+    - Addons
+      - http-parser
+      - crypto (OpenSSL)
+      - zliv (compression)
+
+- **I/O**
+
+  - Input / Output (Entrada / Saída)
+    - File System
+    - Network
+    - DNS
+
+- **Libuv**
+
+  - Libuv é uma biblioteca de suporte multiplataforma com foco em E/S assíncrona.
+
+  - Libuv é uma biblioteca C/C++ usada para abstrair operações de E/S sem bloqueio para uma interface consistente em todas as plataformas suportadas. Ele fornece mecanismos para lidar com sistema de arquivos, DNS, rede, child processes (processos filho), pipes, signal handling (manipulação de sinal), polling e streaming. 
+
+
+16. NodeJS Single-Thread ou Multi-Thread?
+
+#### Single-Thread
+
+O Node.js é uma plataforma orientada a eventos que utiliza o conceito de thread única para gerenciar a pilha de eventos ou pilha de chamada (Call Stack), que por sinal adota o comportamento do tipo LIFO (última entrada, primeira saída). As operações de background no Node são gerenciadas por **works** que rodam em segundo plano, estes sim podem conter operações multi-thread.
+
+#### Multi-Thread (Multiprocessamento / thread-pool) 
+
+Multi-Thread &rarr; A **Libuv** em alguns casos especificos, fornece um único processo que dispara vários Thread que são executados ao mesmo tempo. A qual utiliza um **thread-pool** (4 Thread de processamento - 4 núcleos de processamento de forma assíncrona) para gerenciar operações paralelas.
+
+E estes tais **works**, afinal de contas o que são?
+Os works são processos em background de I/O assíncrono não bloqueastes gerenciados pela **libuv**, uma biblioteca open source multiplataforma escrita em linguagem C++, a qual utiliza um **thread-pool** para gerenciar operações paralelas. Este comportamento de thread única para manipulação da Call Stack é o que garante tanta performance a essa plataforma.
+
+https://nodejs.org/pt-br/docs/
+
+Exemplo:
+
+<code> un.js </code>
+
+```js
+const crypto = require('crypto'); // OpenSSL
+
+const start = Date.now();
+
+function logHastTime() {
+
+    crypto.pbkdf2('a', 'b', 100000, 512, 'sha512', () => {
+        console.log(`Hash: ${Date.now() - start}`);
+    });
+}
+
+// thread-pool (4 Thread núcleos de processamento de forma assíncrona para gerenciar operações paralelas).
+logHastTime();
+logHastTime();
+logHastTime();
+logHastTime(); 
+
+// Ao colocar um 5 Thread, repare que ele demora mais tempo para processar.
+logHastTime();
+```
+
+
+<code> &rarr; Run 🖥️ &lt;un.js&gt; </code>
+
+```js
+node test.js
+// thread-pool (4 Thread - processamento de forma assíncrona, operações paralelas)
+Hash: 2498
+Hash: 2554
+Hash: 2569
+Hash: 2587
+// (5 Thread - demora mais tempo para processar, operação não paralela)
+Hash: 3383
+```
+
+
+17. A Libuv - Event Loop
+
+#### Event-Loop
+
+O Event-Loop (Loop de Eventos) é o que permite que o Node.js execute operações de I/O, Input/Output, ou seja, E/S (Entrada/Saída) sem bloqueio — apesar do JavaScript ser de Single-Thread (Thread único) — descarregando as operações para o kernel do sistema sempre que possível.
+
+Como a maioria dos kernels modernos são Multi-Thread, eles podem lidar com várias operações em execução em segundo plano. Quando uma dessas operações é concluída, o kernel informa ao Node.js para que o retorno de chamada apropriado possa ser adicionado à fila de pesquisa para eventualmente ser executado. 
+
+https://medium.com/@mmoshikoo/event-loop-in-nodejs-visualized-235867255e81
+https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/
+http://docs.libuv.org/en/v1.x/design.html
+
+
+O diagrama a seguir mostra uma visão geral simplificada da ordem de operações do Event-Loop (Loop de Eventos).
+
+```markdown
+   ┌───────────────────────────┐
+┌─>│           timers          │
+│  └─────────────┬─────────────┘
+│  ┌─────────────┴─────────────┐
+│  │     pending callbacks     │
+│  └─────────────┬─────────────┘
+│  ┌─────────────┴─────────────┐
+│  │       idle, prepare       │
+│  └─────────────┬─────────────┘      ┌───────────────┐
+│  ┌─────────────┴─────────────┐      │   incoming:   │
+│  │           poll            │<─────┤  connections, │
+│  └─────────────┬─────────────┘      │   data, etc.  │
+│  ┌─────────────┴─────────────┐      └───────────────┘
+│  │           check           │
+│  └─────────────┬─────────────┘
+│  ┌─────────────┴─────────────┐
+└──┤      close callbacks      │
+   └───────────────────────────┘
+```
+<code> Cada caixa será referida como uma "fase" do loop de eventos. </code>
+
+Cada fase tem uma fila FIFO de callbacks para executar. Embora cada fase seja especial à sua maneira, geralmente, quando o **Event Loop** entra em uma determinada fase, ele realizará qualquer operação específica para essa fase e, em seguida, executará **callbacks** (retornos de chamada) na fila dessa fase até que a fila se esgote ou o número máximo de retornos de chamada executou. Quando a fila estiver esgotada ou o limite de retorno de chamada for atingido, o loop de eventos passará para a próxima fase e assim por diante.
+
+Como qualquer uma dessas operações pode agendar mais operações e novos eventos processados ​​na fase de polling são enfileirados pelo kernel, os eventos de polling podem ser enfileirados enquanto os eventos de **poll** estão sendo processados. Como resultado, **callbacks** (retornos de chamada) de longa duração podem permitir que a **pool fase** (fase de sondagem) seja executada por muito mais tempo do que o **timer's** threshold (cronômetro). 
+
+#### Visão geral das fases
+
+- **timers** : esta fase executa os callbacks agendados por: _setTimeout( )_ e _setInterval( )_.
+
+- **pending callbacks (chamadas de retorno pendentes)** : executa I/O callbacks deferred (retornos de chamada de E/S adiados) para a próxima iteração do loop. (Network & disk & child processes)
+
+- **idle & prepare (ocioso & preparado)** : usado apenas internamente.
+
+- **poll** : recupera novos I/O events (novos eventos de E/S); executar **callbacks**, scheduled by **timers** (agendado por temporizadores): _setTimeout( )_ e _setInterval( )_.
+
+- **check** : _setImmediate( ) e **callbacks** são invocados aqui.
+
+- **close callbacks ("close" events")** : alguns callbacks próximos, por exemplo socket.on ('close', ...).
+
+Entre cada execução do Event-Loop (loop de eventos), o Node.js verifica se está aguardando qualquer E/S ou temporizadores assíncronos e se não houver nenhum é encerrado corretamente.
+
+
+#### Perguntas
+
+Você se lembra: NodeJS Conceitos Fundamentais.
+Vamos relembrar como a estrutura do NodeJS funciona e como isso afeta a forma como programamos em NodeJS.
+
+##### Pergunta 2:
+Qual comando podemos utilizar para finalizar a execução de um Script rodando pelo node e interrompendo o Event Loop?
+
+- process.exit();
+
 
 ### 3. Controlando o Fluxo de uma Aplicação NodeJS
 
