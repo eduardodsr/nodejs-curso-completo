@@ -16,11 +16,131 @@
 - Criar uma REST API com MongoDB
 - Upload de Arquivos com Multer
 
+
+## Tópicos
+
+### 1. Introdução
+
+2. Estrutura do NodeJS
+3. Instalando e Configurando o NodeJS
+4. Instalando o Git e Configurando Repositório Remoto GitHub
+5. Instalando Terminal Cmder para Windows
+6. Instalando e Configurando Visual Studio Code
+7. Primeiro Script com NodeJS
+8. Utilizando Nodeschool.io
+9. NPM vs Yarn
+10. O Arquivo package.json
+11. A Pasta node_modules e Git Ignore
+
+### 2. Conceitos Fundamentais do NodeJS
+
+12. Blocking Vs Non Blocking
+13. Concorrência e Taxa de Transferência
+
+20. Entendendo Funções de Retorno - Callback Functions
+21. Programação Assíncrona com Promises
+22. Entendendo Async/Await
+23. Programação Dirigida ao Evento
+24. Variáveis internas e o objeto process
+
+### 4. API's Nativas do NodeJS
+
+25. HTTP - Criando um Servidor Web
+26. File System - FS - Lendo Arquivos e Pastas
+27. File System - FS - Criando Arquivos e Pastas
+28. Trabalhando com o módulo utils - Promisify
+29. HTTP, FS - Lendo Arquivo HTML e renderizando na Tela
+30. Conhecendo a API de Console
+31. Events - Controlando eventos com Event Emitter
+32. Child Process - Criando Processo em Segundo Plano
+33. Path - Manipulando o Caminho de Arquivos e Pastas
+34. Error - Manipulando Erros
+35. Buffer - Manipulando dados binários
+
+### 5. Trabalhando com Módulos no NodeJS
+
+36. Criando uma aplicação NPM init
+37. Criando Módulos
+38. Importando e Exportando Módulos
+39. Importando Módulos Nativos com NodeJS 12
+
+### 6. Compressão de Vídeos com FFMPEG e NodeJS
+
+40. Instalando FFMPEG para Compressão e Codificação de Vídeos
+41. Executando Processo em Segundo Plano com Child_Process
+42. Criando a chamada para compressão dos vídeos
+43. Passando parâmetros com process.argv para compressão de vídeos com FFMPE
+
+### 7. Drone - Criando CLI - IoT - Controlando Drone Dji Tello
+
+44. Conhecendo o DJI Tello
+45. Desenvolvendo utilizando SDK DJI
+46. Criando CLI com API nativa ReadLine
+47. Criando a Classe Commander
+48. Criando a Classe CommandParser
+49. Enviando Comandos para o Drone
+50. Decolando e Pousando o Drone
+51. Rotacionando o Drone
+52. Executando Flip no Drone
+53. Código Final do Projeto
+
+### 8. API's de Terceiros - Express
+
+54. Instalando Express
+55. Criando uma aplicação web com Express
+56. Criando rotas com Express
+57. Criando um Middleware para Express
+58. Utilizando Funções Middleware de terceiros
+59. Utilizando funções Middleware para tratamento de erros
+60. Servindo arquivos estáticos com Express
+
+### 9. Criando um Sistema de Upload de Arquivos
+
+55. Configurando Multer
+56. Criando Formulário HTML
+57. Utilizando Multer Storage
+58. Criando a Rota POST e Enviando arquivo para Upload
+
+### 10. MongoDB
+
+59. Instalando e Configurando MongoDB
+60. Criando Schema e Collection
+61. Criando Documentos - InsertOne e InsertMany
+62. MongoDB - Find
+63. MongoDB - Update
+64. MongoDB - Delete
+
+### 11. REST API com NodeJS e MongoDB
+
+65. Criando REST API com NodeJS e MongoDB
+66. Criando o diretório, instalando Express, Mongoose, dotenv e Nodemon
+67. Iniciando Servidor Express
+68. Acessando Banco de Dados MongoDB com NodeJS
+69. Carregando variáveis de ambiente e aceitando formato JSON
+70. Criando o diretório e arquivos de Rotas
+71. Testando as Rotas com REST Client
+72. Testando as Rotas com POSTMAN
+73. Criando Model com Mongoose
+74. Rotas - Inserindo e Consultando Assinantes - Post e Get
+75. Criando uma função Middleware para validar o ID
+76. Consultando um registro com parâmetros - Get :id
+77. Excluindo um Registro - Delete
+78. Alterando um registro - Patch
+
+---
+
 ## Conteúdo do curso
 
 11 seções • 84 aulas • Duração total: 10h
 
 ### 1. Introdução
+
+<details>
+<summary>
+Seção 1 - Anotações
+</summary>
+
+<br>
 
 2. Estrutura do NodeJS
 
@@ -83,7 +203,7 @@ npm --version
 - Subir um servidor Web com poucas linhas de código com o Node.js
 - Criar o arquivo **server.js**
 
-<code> server.js </code>
+Program: <code> server.js </code>
 
 ```js
 const http = require('http');
@@ -286,9 +406,16 @@ Qual diretório deve ser adicionado ao arquivo .gitignore e por qual motivo?
 - node_modules, uma vez que package.json deverá conter os módulos como dependência, é
 desnecessário subir a pasta node_modules para um repositório git.
 
-
+</details>
 
 ### 2. Conceitos Fundamentais do NodeJS
+
+<details>
+<summary>
+Seção 2 - Anotações
+</summary>
+
+<br>
 
 12. Blocking Vs Non Blocking
 
@@ -301,18 +428,19 @@ desnecessário subir a pasta node_modules para um repositório git.
 
 - Ex. Chamada bloqueante ( **Blocking** ) / ( readFile**Sync** ) /  **síncrona**
 
+Program: <code> fs-synce.js </code>
+
 ```js
-const fs = require('fs');
+const fs = require("fs");
 
-console.log((process.hrtime()[0]/60).toFixed(6));
+console.log((process.hrtime()[0]/60).toFixed(5));
+console.log("Antes da leitura do Arquivo");
 
-console.log('Antes da leitura do arquivo');
+const dados = fs.readFileSync("arquivo.txt"); // conexão bloqueante
 
-const dados = fs.readFileSync('README.md'); // conexão bloqueante
+console.log("Executando o console após o arquivo");
 
-console.log('Executando o console após o arquivo');
-
-console.log((process.hrtime()[0]/60).toFixed(6));
+console.log((process.hrtime()[0]/60).toFixed(5));
 ```
 
 <br>
@@ -320,25 +448,22 @@ console.log((process.hrtime()[0]/60).toFixed(6));
 
 - Ex. Chamada não-bloqueante ( **Non Blocking** ) / ( readFile ) / **assíncrona** (criar um callback)
 
+Program: <code> fs-wsynce.js </code>
+
 ```js
-const fs = require('fs');
+const fs = require("fs");
 
-console.log((process.hrtime()[0]/60).toFixed(6));
-
-console.log('Antes da leitura do arquivo');
+console.log((process.hrtime()[0]/60).toFixed(5));
+console.log("Antes da leitura do Arquivo");
 
 // conexão não bloqueante
-
-const dados = fs.readFile('README.md', (err, data) => { 
-
-    if (err) throw err;
-
-    console.log("Terminei a leitura do arquivo README");
+const dados = fs.readFile("arquivo.txt",(err, data)=>{
+    if(err) throw err;
+    console.log("Terminei a leitura Arquivo.txt");
 });
 
-console.log('Executando o console após o arquivo');
-
-console.log((process.hrtime()[0]/60).toFixed(6)); 
+console.log("Executando o console após o arquivo");
+console.log((process.hrtime()[0]/60).toFixed(5));
 ```
 
 <br>
@@ -455,6 +580,8 @@ fs.unlinkSync('data.json'); // método bloqueante
 
 Exemplo com correção do problema acima:
 
+Program: <code> un.js </code>
+
 ```js
 // Vamos utilizar somente o método não bloqueante
 
@@ -485,7 +612,7 @@ Dica: Seguir o mesmo padrão, não misturar o seu código bloqueante com não bl
 
 - O Node.js executa o motor JavaScript V8, o núcleo do Google Chrome, fora do navegador. Isso permite que o Node.js seja muito eficiente.
 
-- o Node.js é um runtime JavaScript server-side, ou seja, uma solução que possibilita ao desenvolvedor executar aplicações escritas em JavaScript do lado do servidor, de forma simples, rápida e performática. Isso é possível basicamente graças ao motor V8 e a biblioteca libuv, solução open-source para a qual dedicaremos mais algumas linhas logo adiante.
+- O Node.js é um runtime JavaScript server-side, ou seja, uma solução que possibilita ao desenvolvedor executar aplicações escritas em JavaScript do lado do servidor, de forma simples, rápida e performática. Isso é possível basicamente graças ao motor V8 e a biblioteca libuv, solução open-source para a qual dedicaremos mais algumas linhas logo adiante.
 
 #### NodeJS o Núcleo
 
@@ -501,7 +628,7 @@ Como funciona o NodeJS INTERNAMENTE?
 
   - Application Code (JS)
 
-    - C/C++ Binginds 
+    - C/C++ Bingings 
       - V8  
       - Libuv &rarr; Event Loop
       - c-ares (DNS)
@@ -509,11 +636,11 @@ Como funciona o NodeJS INTERNAMENTE?
     - Addons
       - http-parser
       - crypto (OpenSSL)
-      - zliv (compression)
+      - zlib (compression)
 
 - **I/O**
 
-  - Input / Output (Entrada / Saída)
+  - Node JS &rarr; I/O ; Input / Output (Entrada / Saída)
     - File System
     - Network
     - DNS
@@ -542,7 +669,7 @@ https://nodejs.org/pt-br/docs/
 
 Exemplo:
 
-<code> un.js </code>
+Program: <code> test.js </code>
 
 ```js
 const crypto = require('crypto'); // OpenSSL
@@ -567,7 +694,7 @@ logHastTime();
 ```
 
 
-<code> &rarr; Run 🖥️ &lt;un.js&gt; </code>
+<code> &rarr; Run 🖥️ &lt;test.js&gt; </code>
 
 ```js
 node test.js
@@ -632,7 +759,7 @@ Como qualquer uma dessas operações pode agendar mais operações e novos event
 
 - **poll** : recupera novos I/O events (novos eventos de E/S); executar **callbacks**, scheduled by **timers** (agendado por temporizadores): _setTimeout( )_ e _setInterval( )_.
 
-- **check** : _setImmediate( ) e **callbacks** são invocados aqui.
+- **check** : _setImmediate( )_ e **callbacks** são invocados aqui.
 
 - **close callbacks ("close" events")** : alguns callbacks próximos, por exemplo socket.on ('close', ...).
 
@@ -650,15 +777,312 @@ Qual comando podemos utilizar para finalizar a execução de um Script rodando p
 - process.exit();
 
 
+</details>
+
+
 ### 3. Controlando o Fluxo de uma Aplicação NodeJS
 
+<details>
+<summary>
+Seção 3 - Anotações
+</summary>
+
+<br>
+
 18. Instalando o Nodemon
+
+#### O que é o Nodemon?
+
+- O **nodemon** é uma ferramenta (biblioteca) que ajuda no desenvolvimento de sistemas/aplicativos baseados em Node.js, verificando automaticamente o servidor quando são detectadas alterações de arquivos no diretório.
+
+- Vamos instalar o nodemon como uma dependência global, ou seja, não ficará instalado como dependência de desenvolvimento (DevDependencies). O nodemon instalado de forma global posso chamar globalmente em qualquer projeto.
+
+```js
+npm install -g nodemon
+
+```
+
+- Criar nosso arquivo chamado nodemon
+
+Program: <code> nodemon.js </code>
+
+```js
+const carro = 'Audi';
+
+console.log(`Carro: ${carro}`);
+```
+
+- O nodemon monitora qualquer alteração nosso arquivo .js
+- Ao alterar a _const carro_, o nodemon monitara as mudanças: 
+<code> const carro = 'Audi' &rarr; const carro = 'Mercedes' </code>
+- Executar nosso arquivo chamado **nodemon.js**
+
+Program: <code> nodemon nodem.js</code> 
+
+```js
+nodemon nodemon.js
+
+[nodemon] 2.0.16
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): *.*
+[nodemon] watching extensions: js,mjs,json
+[nodemon] starting `node nodemon.js`
+Carro: Audi
+[nodemon] clean exit - waiting for changes before restart
+[nodemon] restarting due to changes...
+[nodemon] starting `node nodemon.js`
+Carro: Mercedes
+```
+
 19. Ciclo de Vida de uma aplicação NodeJS
+
+- <u> Tipos de Aplicações Node</u> :
+  - **Aplicações Web**
+    - Express
+    - Micro serviços
+    - REST API &rarr; CRUD (Create, Read, Update & Delete)
+
+  - **Interface de linha de comando**
+    - CLI
+    - Tools (NPM, WEBPACK)
+    - Backup, Sync
+
+  - **IoT**
+    - Conexão com dispositivos via porta UDP
+    - Bibliotecas para Hardware como _johnny fire_
+    - Sensores
+
+  - **Aplicações Desktop** (**Electron**), por exemplo: 
+    - VS Code e Spotify
+
+<br>
+
+- **Chamadas Assíncronas**
+  - Em Node as API são **assíncronas**, assim é necessário ter certeza que foram executadas;
+  - Callbacks Functions
+  - Promises
+  - Async/Await
+
 20. Entendendo Funções de Retorno - Callback Functions
+
+#### Callback Functions (Funções de Retorno)
+
+Exemplo do funcionamento do callback
+
+Program: <code> async / callback.js </code>
+
+```js
+function soma(x, callback) {
+    return setTimeout( () => {
+        return callback(null, x + 5000);
+    }, 3000);
+}
+
+// callback function
+function resolveSoma(err, resultado) {
+    if (err) throw err;
+    console.log(resultado);
+}
+
+soma(200, resolveSoma);
+```
+
 21. Programação Assíncrona com Promises
+
+#### Promises
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+
+**Promise** é um objeto usado para processamento assíncrono. 
+Um Promise (de "promessa") representa um valor que pode estar disponível agora, no futuro ou nunca.
+
+Um Promise está em um destes estados: 
+
+- **pending** (pendente): Estado inicial, que não foi realizada nem rejeitada.
+- **fulfilled** (realizada): sucesso na operação.
+- **rejected** (rejeitado):  falha na operação.
+
+
+<img src="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/promises.png" widf="800px">
+
+
+<br>
+
+Program: <code> async / promise.js </code>
+
+```js
+function soma(x) {
+    return new Promise( (resolve, reject) => {
+
+        setTimeout( ()=> {
+            resolve(x + 5000);
+
+        }, 3000);
+    }) 
+}
+
+soma(200).then( (resultado)=> {
+    console.log(`Resolvido, Resultado: ${resultado}`);
+})
+```
+
 22. Entendendo Async/Await
+
+#### Funções assíncronas
+
+A declaração **async function** define uma função assíncrona, que retorna um objeto AsyncFunction.
+
+https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Statements/async_function
+
+A declaração **await** é utilizado para esperar por uma Promise. Ele pode ser usado apenas dentro de uma **async function**.
+
+https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Operators/await
+
+#### Async/Await
+
+Program: <code> async / async.js </code>
+
+```js
+function sum(x) {
+    return new Promise( (resolve, reject) => {
+
+        if (Number(x) == NaN || Number(x) == undefined || typeof x != 'number') {
+            reject(`O valor de x: ${x} , não é do tipo Number!`);
+        }
+        setTimeout( ()=> {
+            resolve(x + 5000);
+
+        }, 3000);
+    }) 
+}
+
+async function main() {
+
+    try {
+        const result = await sum('230'); 
+        console.log(`Resultado com Aync/Await: ${result} `)
+    } catch (error) {
+        console.log(`Temos problemas: ${error}`);
+
+        console.log(`Usuário do sistema: ${process.env.HOME}`); // user
+    }
+}
+
+main();
+```
+
 23. Programação Dirigida ao Evento
+
+https://nodejs.org/api/events.html
+
+Program: <code> event / event.js </code>
+
+```js
+const EventEmitter = require('events');
+
+class Evento extends EventEmitter {}
+
+const meuEvento = new Evento();
+
+// subscriber - assinante
+
+meuEvento.on('seguranca', (x, y) => {
+    console.log(`Executando o evento "segurança": ${x} ${y}`)
+})
+
+// publisher - emissor
+
+meuEvento.emit('seguranca', 'evento X', 'evento Y');
+
+meuEvento.on('encerrar', (dados) => {
+    console.log(`Assinantes: ${dados}`);
+})
+
+meuEvento.emit('encerrar', 'Encerrando a execução da importação de dados!');
+```
+
+TERMINAL &rarr; 🖥️  &nbsp; <code> node event/event.js </code>
+
+```markdown
+Executando o evento "segurança": evento X evento Y
+
+Assinantes: Encerrando a execução da importação de dados!
+```
+
+<br>
+
+Program: <code> event / event1.js </code>
+
+```js
+const EventEmitter = require('node:events');
+
+class MyEmitter extends EventEmitter {}
+
+const myEmitter = new MyEmitter();
+
+myEmitter.on('event', () => {
+  console.log('an event occurred!');
+});
+
+myEmitter.emit('event');
+
+```
+
+TERMINAL &rarr; 🖥️  &nbsp; <code> node event/event1.js </code>
+
+```markdown
+an event occurred!
+```
+
+<br>
+
+Program: <code> event / event2.js </code>
+
+```js
+const EventEmitter = require('node:events');
+
+const myEmitter = new EventEmitter();
+
+myEmitter.on('event', (a, b) => {
+  console.log(a, b, this);
+  // Prints: a b {}
+});
+
+myEmitter.emit('event', 'a', 'b');
+
+```
+
+TERMINAL &rarr; 🖥️  &nbsp; <code> node event/event2.js </code>
+
+```markdown
+a b {}
+```
+
 24. Variáveis internas e o objeto process
+
+```js
+console.log(`Nome do Arquivo: `, __filename)
+console.log(`Diretório do Arquivo: `,__dirname)
+
+console.log(`Parâmetros de Execução: `, process.argv)
+
+console.log(`Parâmetros de Execução - Retorna o 3 índice do Array: ${process.argv[3]}`)
+
+console.log(`Ambiente do Servidor: `, process.platform)
+
+console.log(`Process env (variáveis de ambiente): `, process.env)
+
+console.log(`Process env (USER): `, process.env.USER)
+console.log(`Process env (LOGNAME): `, process.env.LOGNAME)
+console.log(`Process env (SHELL): `, process.env.SHELL)
+console.log(`Process env (HOME): `, process.env.HOME)
+console.log(`Process env (PWD: `, process.env.PWD)
+console.log(`Process env (LANG): `, process.env.LANG)
+```
+
+</details>
+
+---
 
 ### 4. API's Nativas do NodeJS
 
@@ -730,6 +1154,18 @@ Qual comando podemos utilizar para finalizar a execução de um Script rodando p
 ### 11. REST API com NodeJS e MongoDB
 
 65. Criando REST API com NodeJS e MongoDB
+
+#### REST API
+
+|  C R U D      |   R E S T                  |
+|---------------|----------------------------|
+| C r e a t e   |  &rarr; P O S T            |
+|  R e a d      |  &rarr; G E T              |   
+|  U p d a t e  |  &rarr; P U T / P A T C H  |   
+|  D e l e t e  |  &rarr; D E L E T E        |   
+
+<br>
+
 66. Criando o diretório, instalando Express, Mongoose, dotenv e Nodemon
 67. Iniciando Servidor Express
 68. Acessando Banco de Dados MongoDB com NodeJS

@@ -9,5 +9,6 @@
   },
   "keywords": [],
   "author": "Eduardo Rodrigues",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {}
 }
