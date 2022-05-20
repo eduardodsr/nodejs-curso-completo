@@ -40,6 +40,9 @@
 15. Programação Assíncrona com Promises
 16. Entendendo Async/Await
 17. Programação Dirigida ao Evento
+
+### 3. Controlando o Fluxo de uma Aplicação NodeJS
+
 18. Instalando o Nodemon
 19. Ciclo de Vida de uma aplicação NodeJS
 20. Entendendo Funções de Retorno - Callback Functions
