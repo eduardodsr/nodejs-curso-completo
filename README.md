@@ -36,7 +36,12 @@
 
 12. Blocking Vs Non Blocking
 13. Concorrência e Taxa de Transferência
-
+14. Cuidados ao utilizar Blocking e Non Blocking
+15. Programação Assíncrona com Promises
+16. Entendendo Async/Await
+17. Programação Dirigida ao Evento
+18. Instalando o Nodemon
+19. Ciclo de Vida de uma aplicação NodeJS
 20. Entendendo Funções de Retorno - Callback Functions
 21. Programação Assíncrona com Promises
 22. Entendendo Async/Await
