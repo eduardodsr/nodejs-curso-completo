@@ -1095,10 +1095,373 @@ console.log(`Process env (LANG): `, process.env.LANG)
 ### 4. API's Nativas do NodeJS
 
 25. HTTP - Criando um Servidor Web
+
+O ambiente do NodeJS já tem recursos para criar um Servidor Web.
+
+Program: <code> event / event.js </code>
+
+<!-- 
+<a href="./http/index.js">Link program</a>
+-->
+
+```js
+const http = require('http');
+
+const hostname = '127.0.0.1';
+
+const port = 3000;
+
+const url = `http://${hostname}:${port}/`;
+
+const server = http.createServer( (req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/html');
+    res.end('<h1> Bem Vindo. <br> Node.JS </h1>');
+
+});
+
+server.listen(port, hostname, ()=>{
+    console.log(`Servidor rodando em ${url}`);
+})
+
+const open = (
+    process.platform == 'darwin' ? 'open' : 
+    process.platform == 'win32' ? 'start' : 'xdg-open'
+    );
+
+require('child_process').exec(open + ' ' + url);
+```
+
+TERMINAL &rarr; 🖥️  &nbsp; <code> http / index.js </code>
+
+```markdown
+nodemon http/index.js 
+[nodemon] 2.0.16
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): *.*
+[nodemon] watching extensions: js,mjs,json
+[nodemon] starting `node http/index.js`
+Servidor rodando em http://127.0.0.1:3000/
+```
+
+<br>
+
 26. File System - FS - Lendo Arquivos e Pastas
+
+https://nodejs.org/api/fs.html
+https://www.w3schools.com/nodejs/nodejs_filesystem.asp
+
+#### FS - File System &rarr; Sistema de arquivos do Node.
+
+O módulo node:fs permite interagir com o sistema de arquivos. 
+O FS é uma API nativa do Node que permite manipular arquivos e pastas do sistema operacional.
+
+Para incluir o módulo File System, use o método 
+<code> var fs = require('fs'); </code>
+
+- Crie um arquivo Node.js que leia o arquivo HTML e recupere o conteúdo:
+
+```js
+var http = require('http');
+var fs = require('fs');
+http.createServer(function (req, res) {
+  fs.readFile('file1.html', function(err, data) {
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write(data);
+    return res.end();
+  });
+}).listen(8080);
+```
+
+---
+
+#### File System - FS - Lendo Arquivos e Pastas
+
+- FS - File System 
+  - **Read** files
+  - **Create** files
+  - **Update** files
+  - **Delete** files
+  - **Rename** files
+
+<code> fs/readDir.js </code>
+
+```js
+const fs = require('fs');
+
+fs.readdir(__dirname, (err, data) => {
+    if (err) throw err;
+
+    data.forEach( (files) => {
+        console.log(__dirname + '/' + files);        
+        // files = 'readDir.js'        
+    });
+})
+```
+
+- Conexão não bloqueante
+
+<code> fs/readFile.js </code>
+
+```js
+const fs = require('fs');
+
+// não bloqueante
+fs.readFile('texto.txt', (err, data) => {
+    if(err) throw err;
+    console.log(data.toString()); // console.log(data);
+})
+```
+
+- Conexão bloqueante
+
+<code> fs/readFile.js </code>
+
+```js
+const fs = require('fs');
+
+// bloqueante
+const texto = fs.readFileSync("texto.txt")
+console.log(`Texto: ${texto}`)
+```
+
 27. File System - FS - Criando Arquivos e Pastas
+
+#### File System - FS - Criando Arquivos e Pastas
+
+- Criar um diretório
+  - projeto
+
+<code> fs/mkdir.js </code>
+
+```js
+const fs = require('fs');
+
+const dir = 'projeto';
+
+fs.mkdir(dir, (err)=>{
+    if (err) throw err;
+    console.log(`Diretório ${dir} foi criado com sucesso!`);
+})
+```
+
+- Criar 3 subdiretórios
+  - Os subdiretórios &rarr; pastas localizadas diretamente em uma mesma pasta!
+  - Criar as 3 pastas (3 diretórios)  &rarr; projeto/assets/images
+    - <code> { recursive: true } </code>
+
+<code> fs/mkdir.js </code>
+
+```js
+const fs = require('fs');
+
+const dir = 'projeto/assets/images';
+
+fs.mkdir(dir, { recursive: true }, (err) => {
+    if (err) throw err;
+    console.log(`Diretório ${dir} foi criado com sucesso!`);
+    // Diretório projeto/assets/images foi criado com sucesso!
+})
+```
+
+- Criar 5 arquivos dentro do diretório: projeto/assets/
+  - São eles:
+    - <code> const assets = ['css', 'js', 'images', 'fonts', 'lib']; </code>
+
+<code> fs/mkdir.js </code>
+
+```js
+const fs = require('fs');
+
+const directory = 'projeto/assets/';
+
+const assets = ['css', 'js', 'images', 'fonts', 'lib'];
+
+function make (dir) {
+
+   dir.forEach(item => {
+       fs.mkdir(`${directory}/${item}`, { recursive: true }, (err) => {
+           if (err) throw err;
+           
+           console.log(`Foi criado o diretório: ${item}`);
+       })
+   });
+}
+
+make(assets);
+```
+
+```txt
+Foi criado o diretório: css
+Foi criado o diretório: images
+Foi criado o diretório: js
+Foi criado o diretório: fonts
+Foi criado o diretório: lib
+```
+
+<br>
+
+- Criar um arquivo de texto
+
+<code> fs/writeFile.js </code>
+
+```js
+const { writeFile } = require('fs');
+
+const file = 'arquivo.txt';
+
+writeFile(file, 'Criando arquivo de texto com writeFile!', err => {
+    if (err) throw err;
+
+    console.log(`O arquivo ${file} foi criado com sucesso!`);
+})
+```
+
+```txt
+node writeFile.js
+O arquivo arquivo.txt foi criado com sucesso!
+
+cat arquivo.txt
+Criando arquivo de texto com writeFile!
+```
+
 28. Trabalhando com o módulo utils - Promisify
+
+- Criando um arquivo utilizando **promisify** do módulo nativo **util**
+
+<code> fs/utilsWriteFile.js.js </code>
+
+```js
+const { promisify } = require('util');
+
+const writeFile = promisify(require('fs').writeFile);
+
+const file = 'utilFile.txt';
+
+const content = `Criando um arquivo utilizando promisify do módulo nativo util`;
+
+writeFile(file, content)
+    .then( () => console.log(`Arquivo ${file} foi criado com sucesso!`) )
+    .catch( (err) => console.log(`Erro: ${err}`) )
+
+```
+
+```txt
+node utilsWriteFile.js 
+Arquivo utilFile.txt foi criado com sucesso!
+
+cat utilFile.txt
+Criando um arquivo utilizando promisify do módulo nativo util%
+```
+
+<br>
+
+- Criando um arquivo utilizando promises
+
+<code> fs/promiseWriteFile.js </code>
+
+```js
+const { writeFile } = require('fs');
+
+function createFile(name, content) {
+    return new Promise( (resolve, reject) => {
+
+        writeFile(name, content, err => {
+            if (err) return reject(err);
+            resolve();
+        }) 
+    })
+}
+
+const file = 'promiseFile.txt';
+
+createFile(file, `Criando um arquivo ${file} utilizando promises!`)
+    .then( () => console.log(`Arquivo ${file} foi criado com sucesso!`) )
+    .catch(err => console.log(err))
+
+```
+
+```txt
+node promiseWriteFile.js 
+Arquivo promiseFile.txt foi criado com sucesso!
+
+cat promiseFile.txt    
+Criando um arquivo promiseFile.txt utilizando promises!%
+```
+
+<br>
+
+- Leitura de um arquivo utilizando Promises.
+
+<code> fs/asyncRead.js </code>
+
+
+```js
+const fs = require('fs').promises;
+
+async function read() {
+    const data = await fs.readFile('texto.txt', 'binary');
+    return new Buffer.from(data);
+}
+
+try {
+    read().then(data => console.log(data.toString()));
+} catch (error) {
+    console.log(err);
+}
+```
+
+<br>
+
 29. HTTP, FS - Lendo Arquivo HTML e renderizando na Tela
+
+- Criar um arquivo
+  - <code>fs/index.html</code>
+
+- Criar um arquivo para renderizar na tela do navegador
+  - <code>fs/asyncRead.js</code>
+
+
+```js
+const http = require('http');
+const { readFile } = require('fs');
+
+const host = '127.0.0.1'
+const port = '3000'
+const url = `http://${host}:${port}`
+
+let content = '';
+
+readFile('index.html', (err, data) => {
+    if(err) throw err;
+    content = data;
+})
+
+const server = http.createServer( (req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/html');
+    res.end(content);
+})
+
+server.listen(port, host, () => {
+    console.log(`Servidor rodando em ${url}`);
+})
+
+const start = (
+    process.platform == 'darwin' ? 'open' : process.platform == 'win32' ? 'start' : 'xdg-open'
+)
+
+require('child_process').exec(start + ' ' + url); // processo em 2º plano
+```
+
+- Será aberto automaticamente pelo navegador o endereço: 
+  - http://127.0.0.1:3000
+
+```txt
+node html.js
+Servidor rodando em http://127.0.0.1:3000
+```
+
 30. Conhecendo a API de Console
 31. Events - Controlando eventos com Event Emitter
 32. Child Process - Criando Processo em Segundo Plano
