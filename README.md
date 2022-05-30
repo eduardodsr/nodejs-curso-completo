@@ -557,13 +557,14 @@ A habilidade de executar <code> maisProcessamento() </code> sem ter de esperar o
 
 #### Concorrência e Rendimento
 
-A execução padrão do JavaScript no Node.js é **single threaded** (processo numa única trilha), ou seja, acontece é um único processo. 
+A execução padrão do JavaScript no Node.js é **single threaded** (processo numa única trilha). 
 
-Então a **concorrência** é referente somente à capacidade do **event loop** de executar funções de **callback** depois de completar qualquer outro processamento, ou seja, executar funções em paralelo. 
+Então a **concorrência** é referente somente à capacidade do **event loop** de executar funções de **callback** depois de completar qualquer outro processamento (executar funções em paralelo). 
 
 Qualquer código que pode rodar de maneira concorrente deve permitir que o event loop continue executando enquanto uma operação não-JavaScript, como I/O, está sendo executada.
 
 Portanto, o ideal é utilizar os Métodos Não-Bloqueantes ( Non Blocking ) para executar processos em paralelo (concorrência), o código fica com mais performace. Reduz o tempo de processamento e melhora a resposta.
+
 
 14. Cuidados ao utilizar Blocking e Non Blocking
 
@@ -586,7 +587,7 @@ fs.readFile('data.json', (err, data) => {
 fs.unlinkSync('data.json'); // método bloqueante
 ```
 
-Exemplo com correção do problema acima:
+**Correção** do problema acima, vamos utilizar somente o método não bloqueante:
 
 Program: <code> un.js </code>
 
@@ -1463,11 +1464,413 @@ Servidor rodando em http://127.0.0.1:3000
 ```
 
 30. Conhecendo a API de Console
+
+
+<code> console/console.js </code>
+
+```js
+// log
+
+console.log('Exibindo uma mensagem no console');
+
+// erro
+
+console.error(new Error('Exibindo mensagem de erro, temos problemas!'));
+
+// table
+
+const carros = ['GM', 'FIAT', 'FORD', 'VW','Renault','Honda', 'Hyundai'];
+
+console.table(carros);
+
+// table
+
+const dados = { name: 'Eduardo', empresa: 'Freelancer' }
+
+console.table(dados);
+
+// count
+
+console.count('processo'); // processo: 1
+console.count('processo'); // processo: 2
+console.count('processo'); // processo: 3
+
+// countReset
+
+console.log('Resetando o processo');
+console.countReset('processo');
+console.count('processo'); // processo: 1
+
+// time & timeEnd
+
+console.time('contador');
+
+for(let index = 0; index < 3; index++) {
+    console.log('-');
+}
+
+console.timeEnd('contador');
+
+// assert -> Exibe uma condição se ela falhar (false)
+
+console.assert(true, 'TRUE'); // não mostra nada!
+
+console.assert(false, '%s, não funcinou!', 'FALSE'); // mostra a mensagem
+
+// clear -> Limpa todos os dados do console
+
+console.clear();
+```
+
 31. Events - Controlando eventos com Event Emitter
+
+#### Event emitter
+
+https://nodejs.dev/learn/the-nodejs-event-emitter
+
+<code> event/eventEmitter.js </code>
+
+```js
+
+// initialize
+const EventEmitter = require('events');
+const eventEmitter = new EventEmitter();
+
+// start
+eventEmitter.on('start', () => {
+    console.log('started');
+});
+
+// run
+eventEmitter.emit('start');
+```
+
+<code> node event/eventEmitter.js </code>
+
+```txt
+started
+```
+
+<br>
+
+<code> event/eventEmitterNumber.js </code>
+
+```js
+// initialize
+const EventEmitter = require('events');
+const eventEmitter = new EventEmitter();
+
+// start
+eventEmitter.on('start', number => {
+    console.log(`started ${number}`);
+});
+
+// run
+eventEmitter.emit('start', 123);
+```
+
+<code> node event/eventEmitterNumber.js </code>
+
+```txt
+started 123
+```
+
+<br>
+
+<code> event/eventEmitterNumberStartEnd.js  </code>
+
+```js
+// initialize
+const EventEmitter = require('events');
+const eventEmitter = new EventEmitter();
+
+// start
+eventEmitter.on('start', (start, end) => {
+    console.log(`started from ${start} to ${end}`);
+});
+
+// run
+eventEmitter.emit('start', 1, 100);
+```
+
+<code> node event/eventEmitterNumberStartEnd.js  </code>
+
+```txt
+started from 1 to 100
+```
+
+<br>
+
+<code> event/event.js </code>
+
+```js
+// initialize
+const EventEmitter = require('events');
+const eventEmitter = new EventEmitter();
+
+// subscriber - assinante (on)
+eventEmitter.on('start', (x, y) => {
+    console.log(`Event Emitter: ${x} and ${y}`)
+})
+
+// publisher - emissor (emit)
+eventEmitter.emit('start', 'Start', 'End');
+
+// ------------- outher example ------------- // 
+
+// subscriber - assinante (on)
+eventEmitter.on('finish', (data) => {
+    console.log(`Event Emitter: ${data}`);
+})
+
+// publisher - emissor (emit)
+eventEmitter.emit('finish', 'Terminating Execution!');
+```
+
+<code> node event/event.js  </code>
+
+```txt
+Event Emitter: Start and End
+Event Emitter: Terminating Execution!
+```
+
+<br>
+
 32. Child Process - Criando Processo em Segundo Plano
+
+https://nodejs.org/api/child_process.html
+https://www.digitalocean.com/community/tutorials/how-to-launch-child-processes-in-node-js-pt
+
+**Como lançar child process (processos filhos) no Node**
+
+Quando um usuário executa um único programa no Node.js, ele é executado como um único processo de sistema operacional (OS) que representa a instância do programa em execução. Dentro desse processo, o Node.js executa programas em uma única thread. Assim, o Node com apenas uma thread pode ser executada em um processo, operações que levam muito tempo para ser executadas em JavaScript podem bloquear a thread do Node.js e atrasar a execução de outro código. 
+
+Uma estratégia importante para contornar este problema é lançar um **Child Process** (**processo filho ou processo em segundo plano**), ou um processo criado por outro processo, quando confrontado com tarefas de longa execução. Quando um novo processo é lançado, o sistema operacional pode empregar técnicas de multiprocessamento para garantir que o **processo principal do Node.js** e o **processo filho adicional** executem concorrentemente ou ao mesmo tempo.
+
+O Node.js inclui o módulo child_process, que possui funções para criar novos processos. Além de lidar com tarefas de longa execução, este módulo também pode interagir com o SO e executar comandos do shell. Administradores de sistema podem usar o Node.js para executar comandos do shell para estruturar e manter suas operações como um módulo Node.js em vez de scripts de shell.
+
+---
+
+#### Child Process
+
+- Child Process - Criando Processo em Segundo Plano
+  - Fluxo + **stdin** &rarr; Entrada Padrão (STD IN)
+  - Fluxo + **stdout** &rarr; Saída Padrão (STD OUT)
+  - Fluxo + **stderr** &rarr; Erro Padrão (STD ERR)
+
+<br>
+
+- Programa - Lista todos os arquivos do diretório
+
+<code> childprocess/childProcess.js </code>
+
+```js
+const { spawn } = require('child_process');
+
+// const ls = spawn('ls', ['-Slh', '../']); // lista todos os arquivos do diretorio anterior
+
+const ls = spawn('ls', ['-Slh']); // lista todos os arquivos do diretorio atual
+
+// STDOUT -> Saída Padrão
+ls.stdout.on('data', (data) => {
+    console.log(`stdout: ${data}`);
+});
+
+// STDERR -> Erro Padrão
+ls.stderr.on('data', (data) => {
+    console.log(`stdout: ${data}`);
+});
+
+ls.on('close', (code) => {
+    console.log(`Processo em segundo plano finalizado com o código ${code}`)
+})
+```
+
+<code> node childProcess.js </code>
+
+```txt
+
+stdout: total 8
+-rw-r--r--  1 eduardo  staff   675B May 23 21:56 childProcess.js
+
+Processo em segundo plano finalizado com o código 0
+```
+
+<br>
+
 33. Path - Manipulando o Caminho de Arquivos e Pastas
+
+https://nodejs.org/api/path.html
+https://nodejs.dev/learn/the-nodejs-path-module
+https://www.tutorialspoint.com/nodejs/nodejs_path_module.htm
+https://blog.logrocket.com/mastering-node-js-path-module/
+
+
+<code> node path/path.js </code>
+
+```js
+const path = require('path');
+
+// path.basename(path[, ext]) -> apresenta somente o nome do arquivo
+// =================================================================
+
+console.log(path.basename('/Users/eduardo/Dev/node/index.html'));
+// Returns: 'index.html'
+
+console.log(path.basename('/Users/eduardo/Dev/node/index.html', '.html'));
+// Returns: 'index'
+
+
+// path.normalize(path) -> Arrumar as barras, ou seja, normaliza o caminho
+// =======================================================================
+
+console.log(path.normalize('Users/eduardo/Dev//node/index.html')); 
+// Returns: '/Users/eduardo/Downloads/Dev/nodejs-curso-completo'
+
+console.log(path.normalize('Users/eduardo/Dev//node/dir/..'));
+// Returns: 'Users/eduardo/Dev/node'
+
+
+// path.join([...paths]) -> Montar um caminho
+// ==========================================
+
+console.log(path.join('/one', 'two', 'three/four'));        // Returns: '/one/two/three/four'
+console.log(path.join('/one', 'two', 'three/four', '..'));  // Returns: '/one/two/three'
+
+
+// path.resolve -> Apresenta o caminho absoluto do arquivo (caminho absoluto é o nome completo do caminho)
+// =======================================================================================================
+
+console.log(path.resolve('index.html'));
+// Returns: '/Users/eduardo/Downloads/Dev/nodejs-curso-completo/path/index.html'
+
+
+// path.dirname(path) - Apresenta o caminho relativo do arquivo (diretório atual onde o usuário está localizado)
+// =============================================================================================================
+
+console.log(path.dirname('/Users/eduardo/Downloads/Dev/nodejs-curso-completo/index.html'));
+// Returns: '/Users/eduardo/Downloads/Dev/nodejs-curso-completo'
+
+
+// path.extname(path) - Retorna a extensão do arquivo
+// ==================================================
+
+console.log(path.extname('index.html'));
+// Returns: '.html'
+
+console.log(path.extname('README.md'));
+// Returns: '.md'
+
+console.log(path.extname('index.'));
+// Returns: '.'
+
+console.log(path.extname('index'));
+// Returns: ''
+
+
+// path.parse(path) - Retorna um objeto com as propriedades (dir, root, base, name e ext)
+// =======================================================================================
+
+console.log(path.parse('/home/user/dir/file.txt'));
+
+// Returns:
+// { 
+//   root: '/',
+//   dir: '/home/user/dir',
+//   base: 'file.txt',
+//   ext: '.txt',
+//   name: 'file' 
+// }
+```
+
+<br>
+
 34. Error - Manipulando Erros
+
+- try...catch
+
+https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Statements/try...catch
+
+<code> error/error.js </code>
+
+```js
+function execute() {
+    executeTo();
+}
+
+function executeTo() {
+    throw new Error('Ah não, deu erro! Não é possível, na minha máquina funciona!');
+}
+
+function init() {
+    
+    try {
+        execute();
+
+    } catch (error) {
+        console.log(`Temos um problema! ${error}`);
+    }
+}
+
+init();
+console.log('Depois do Erro');
+```
+
+<br>
+
+- EventEmitter -> Manipulando Erros com Eventos
+
+<code> error/errorEvent.js </code>
+
+```js
+// EventEmitter
+
+// initialize
+const EventEmitter = require('events');
+const eventEmitter = new EventEmitter();
+
+// validated object
+const validaObjeto = (data) => {
+    if (typeof data !== 'object') {
+        eventEmitter('Error', new Error('Tipo de dado inválido!'));
+    } else {
+        console.log('Objeto válido!');
+    }
+}
+
+// addListener -> espera de evento
+eventEmitter.addListener('error', (err) => {
+    console.log('Event: ' + err);
+})
+
+// object create
+let dados = { 
+    name: 'Hcode Treinamentos',
+    course: 'NodeJS'
+}
+
+// Execute -> Chamando a função validaObjetivo (verifica se é um objeto)
+validaObjeto(dados); 
+
+// Return: 
+// Objeto válido!
+```
+
+<br>
+
 35. Buffer - Manipulando dados binários
+
+<code>  </code>
+
+```js
+
+```
+
+<code>  </code>
+
+```txt
+```
+
 
 ### 5. Trabalhando com Módulos no NodeJS
 

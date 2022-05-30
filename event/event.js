@@ -1,21 +1,27 @@
+// initialize
 const EventEmitter = require('events');
+const eventEmitter = new EventEmitter();
 
-class Evento extends EventEmitter {}
+// subscriber - assinante (on)
 
-const meuEvento = new Evento();
-
-// subscriber - assinante
-
-meuEvento.on('seguranca', (x, y) => {
-    console.log(`Executando o evento "segurança": ${x} ${y}`)
+eventEmitter.on('start', (x, y) => {
+    console.log(`Event Emitter: ${x} and ${y}`)
 })
 
-// publisher - emissor
+// publisher - emissor (emit)
 
-meuEvento.emit('seguranca', 'evento X', 'evento Y');
+eventEmitter.emit('start', 'Start', 'End');
 
-meuEvento.on('encerrar', (dados) => {
-    console.log(`Assinantes: ${dados}`);
+// ------------- outro exemplo ------------- // 
+
+
+
+// subscriber - assinante (on)
+
+eventEmitter.on('finish', (data) => {
+    console.log(`Event Emitter: ${data}`);
 })
 
-meuEvento.emit('encerrar', 'Encerrando a execução da importação de dados!');
+// publisher - emissor (emit)
+
+eventEmitter.emit('finish', 'Terminating Execution!');
