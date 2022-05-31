@@ -1,5 +1,8 @@
 # Node JS Curso Completo do Básico ao Avançado 
 
+<p align="center"> |&nbsp;&nbsp;&nbsp; 
+   <a href="#autor">Autor &rarr; eduardodsr</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+</p>
 
 ## Sobre este curso
 
@@ -1953,3 +1956,26 @@ validaObjeto(dados);
 76. Consultando um registro com parâmetros - Get :id
 77. Excluindo um Registro - Delete
 78. Alterando um registro - Patch
+
+
+<br>
+
+<hr>
+
+<span id="autor">
+
+### Autor :smile:
+
+<div align="rigth">
+  <a href="https://github.com/eduardodsr">
+   <img align="center" style="border-radius: 100%;" src="https://avatars.githubusercontent.com/u/66234125?s=400" width="100px;" alt="Foto do GitHub de eduardodsr"/>
+  </a>
+</div>
+
+<br>
+
+- `Dev:` Eduardo da Silva Rodrigues
+
+- `GitHub:` [github.com/eduardodsr](https://www.github.com/eduardodsr) :link:
+
+- `E-mail:` <eduardodsr@gmail.com> :email:
